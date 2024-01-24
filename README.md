@@ -586,9 +586,24 @@ If both `Foo` and `Bar` each had 99.9% availability, their total availability in
   <i><a href=http://www.slideshare.net/srikrupa5/dns-security-presentation-issa>Source: DNS security presentation</a></i>
 </p>
 
+<p align="center">
+  <img src="images/dns_record_request_sequence_recursive_resolver.png">
+  <br/>
+  <i><a href=https://www.cloudflare.com/learning/dns/what-is-dns>Source: Cloudflare learning</a></i>
+</p>
+
 A Domain Name System (DNS) translates a domain name such as www.example.com to an IP address.
 
 DNS is hierarchical, with a few authoritative servers at the top level.  Your router or ISP provides information about which DNS server(s) to contact when doing a lookup.  Lower level DNS servers cache mappings, which could become stale due to DNS propagation delays.  DNS results can also be cached by your browser or OS for a certain period of time, determined by the [time to live (TTL)](https://en.wikipedia.org/wiki/Time_to_live).
+
+1. A user types ‘example.com’ into a web browser and the query travels into the Internet and is received by a DNS recursive resolver.
+2. The resolver then queries a DNS root nameserver (.).
+3. The root server then responds to the resolver with the address of a Top Level Domain (TLD) DNS server (such as .com or .net), which stores the information for its domains. When searching for example.com, our request is pointed toward the .com TLD.
+4. The resolver then makes a request to the .com TLD.
+5. The TLD server then responds with the IP address of the domain’s nameserver, example.com.
+6. Lastly, the recursive resolver sends a query to the domain’s nameserver.
+7. The IP address for example.com is then returned to the resolver from the nameserver.
+8. The DNS resolver then responds to the web browser with the IP address of the domain requested initially.
 
 * **NS record (name server)** - Specifies the DNS servers for your domain/subdomain.
 * **MX record (mail exchange)** - Specifies the mail servers for accepting messages.
